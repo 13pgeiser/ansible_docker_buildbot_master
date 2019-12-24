@@ -1,0 +1,21 @@
+---
+
+- name: Install buildbot master image
+  docker_container:
+    name: buildbot_master
+    image: "{{ docker_buildbot_master_image }}"
+    memory: 200M
+    ports:
+    - "8010:8010"
+    - "9989:9989"
+    restart_policy: 'always'
+    env:
+      BUILDBOT_MASTER_URL="http://192.168.188.222:8010/"
+    volumes:
+    - buildbot_master:/var/lib/buildbot/master
+    network_mode: bridge
+    networks:
+      - name: bridge
+    purge_networks: yes
+    networks_cli_compatible: yes
+
